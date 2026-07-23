@@ -1,7 +1,8 @@
 package com.architectureoslabs.engine;
 
+
 import com.architectureoslabs.engine.analyzer.RepositoryAnalyzer;
-import com.architectureoslabs.engine.model.SoftwareComponent;
+import com.architectureoslabs.engine.model.ParsedJavaFile;
 
 
 /**
@@ -24,10 +25,25 @@ public class ArchitectOSApplication {
                 new RepositoryAnalyzer();
 
 
-        SoftwareComponent component =
+
+        String sourceCode = """
+
+                import com.company.repository.PaymentRepository;
+
+
+                public class PaymentService {
+
+                }
+
+                """;
+
+
+
+        ParsedJavaFile result =
                 analyzer.analyze(
-                        "sample-repository"
+                        sourceCode
                 );
+
 
 
         System.out.println(
@@ -35,7 +51,18 @@ public class ArchitectOSApplication {
         );
 
 
-        System.out.println(component);
+
+        System.out.println(
+                "Component: "
+                        + result.getComponent()
+        );
+
+
+
+        System.out.println(
+                "Dependencies: "
+                        + result.getDependencies()
+        );
 
     }
 
