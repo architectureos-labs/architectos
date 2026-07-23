@@ -1,44 +1,51 @@
 package com.architectureoslabs.engine.analyzer;
 
-import com.architectureoslabs.engine.model.SoftwareComponent;
+
+import com.architectureoslabs.engine.model.ParsedJavaFile;
+import com.architectureoslabs.engine.parser.JavaSourceParser;
+
 
 
 /**
  * Analyzes software repositories and extracts architecture information.
  *
- * This class coordinates different analysis capabilities:
+ * This class coordinates:
  *
- * - Source code parsing
+ * - Source parsing
  * - Component discovery
  * - Dependency extraction
- * - Architecture rule evaluation
  */
 public class RepositoryAnalyzer {
 
 
+    private final JavaSourceParser parser;
+
+
+
+    public RepositoryAnalyzer() {
+
+        this.parser =
+                new JavaSourceParser();
+
+    }
+
+
+
     /**
-     * Analyze a repository location.
+     * Analyze Java source content.
      *
-     * @param repositoryPath path to the repository
-     * @return discovered software component
+     * @param sourceCode Java source code
+     * @return parsed architecture information
      */
-    public SoftwareComponent analyze(String repositoryPath) {
+    public ParsedJavaFile analyze(
+            String sourceCode
+    ) {
 
-        /*
-         * Initial implementation.
-         *
-         * Future versions will:
-         *
-         * 1. Scan source files
-         * 2. Parse code structure
-         * 3. Identify components
-         * 4. Build dependency relationships
-         */
 
-        return new SoftwareComponent(
-                repositoryPath,
-                "repository"
+        return parser.parse(
+                sourceCode
         );
+
     }
 
 }
