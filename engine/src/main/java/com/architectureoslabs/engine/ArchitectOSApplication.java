@@ -1,35 +1,26 @@
 package com.architectureoslabs.engine;
 
-
 import com.architectureoslabs.engine.analyzer.RepositoryAnalyzer;
-import com.architectureoslabs.engine.model.ParsedJavaFile;
-
+import com.architectureoslabs.engine.model.ArchitectureGraph;
 
 /**
  * Main entry point for ArchitectOS Analysis Engine.
- *
- * This class initializes the architecture analysis platform.
  */
 public class ArchitectOSApplication {
 
-
     public static void main(String[] args) {
-
 
         System.out.println(
                 "ArchitectOS Analysis Engine initialized"
         );
 
-
         RepositoryAnalyzer analyzer =
                 new RepositoryAnalyzer();
-
-
 
         String sourceCode = """
 
                 import com.company.repository.PaymentRepository;
-
+                import com.company.user.UserService;
 
                 public class PaymentService {
 
@@ -37,32 +28,22 @@ public class ArchitectOSApplication {
 
                 """;
 
+        ArchitectureGraph graph =
+                analyzer.analyze(sourceCode);
 
+        System.out.println();
 
-        ParsedJavaFile result =
-                analyzer.analyze(
-                        sourceCode
-                );
+        System.out.println("Components");
 
+        graph.getComponents()
+                .forEach(System.out::println);
 
+        System.out.println();
 
-        System.out.println(
-                "Analysis Result:"
-        );
+        System.out.println("Dependencies");
 
-
-
-        System.out.println(
-                "Component: "
-                        + result.getComponent()
-        );
-
-
-
-        System.out.println(
-                "Dependencies: "
-                        + result.getDependencies()
-        );
+        graph.getDependencies()
+                .forEach(System.out::println);
 
     }
 
