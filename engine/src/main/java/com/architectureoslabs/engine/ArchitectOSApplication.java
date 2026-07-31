@@ -5,17 +5,19 @@ import com.architectureoslabs.engine.analyzer.RepositoryAnalyzer;
 import com.architectureoslabs.engine.model.ArchitectureGraph;
 import com.architectureoslabs.engine.report.ArchitectureReportGenerator;
 import com.architectureoslabs.engine.report.ReportWriter;
+import com.architectureoslabs.engine.scanner.RepositoryScanner;
 import com.architectureoslabs.engine.rules.ArchitectureRuleEngine;
 import com.architectureoslabs.engine.rules.CircularDependencyRule;
 import com.architectureoslabs.engine.rules.RuleResult;
 
 
 import java.util.List;
+import java.nio.file.Path;
 
 
 
 /**
- * Main entry point for ArchitectOS Analysis Engine.
+ * Main entry point for ArchitectOS.
  */
 public class ArchitectOSApplication {
 
@@ -24,26 +26,32 @@ public class ArchitectOSApplication {
             throws Exception {
 
 
+
+        String repository =
+                ".";
+
+
+
+        RepositoryScanner scanner =
+                new RepositoryScanner();
+
+
+
+        List<Path> files =
+                scanner.scan(
+                        repository
+                );
+
+
+
         RepositoryAnalyzer analyzer =
                 new RepositoryAnalyzer();
 
 
 
-        String sourceCode = """
-
-                import com.company.user.UserService;
-
-                public class PaymentService {
-
-                }
-
-                """;
-
-
-
         ArchitectureGraph graph =
                 analyzer.analyze(
-                        sourceCode
+                        files
                 );
 
 
@@ -60,7 +68,9 @@ public class ArchitectOSApplication {
 
 
         List<RuleResult> results =
-                engine.analyze(graph);
+                engine.analyze(
+                        graph
+                );
 
 
 
@@ -76,25 +86,22 @@ public class ArchitectOSApplication {
 
 
 
-        ReportWriter writer =
-                new ReportWriter();
-
-
-
-        writer.write(
-                "architectos-report.md",
-                report
-        );
+        new ReportWriter()
+                .write(
+                        "architectos-report.md",
+                        report
+                );
 
 
 
         System.out.println(
-                "Architecture report generated:"
+                "Analyzed files: "
+                        + files.size()
         );
 
 
         System.out.println(
-                "architectos-report.md"
+                "Report generated: architectos-report.md"
         );
 
     }
