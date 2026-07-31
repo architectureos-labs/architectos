@@ -3,16 +3,25 @@ package com.architectureoslabs.engine;
 
 import com.architectureoslabs.engine.analyzer.RepositoryAnalyzer;
 import com.architectureoslabs.engine.model.ArchitectureGraph;
+import com.architectureoslabs.engine.report.ArchitectureReportGenerator;
+import com.architectureoslabs.engine.report.ReportWriter;
 import com.architectureoslabs.engine.rules.ArchitectureRuleEngine;
 import com.architectureoslabs.engine.rules.CircularDependencyRule;
 import com.architectureoslabs.engine.rules.RuleResult;
 
 
+import java.util.List;
 
+
+
+/**
+ * Main entry point for ArchitectOS Analysis Engine.
+ */
 public class ArchitectOSApplication {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+            throws Exception {
 
 
         RepositoryAnalyzer analyzer =
@@ -50,42 +59,43 @@ public class ArchitectOSApplication {
 
 
 
-        System.out.println(
-                "ArchitectOS Report"
+        List<RuleResult> results =
+                engine.analyze(graph);
+
+
+
+        ArchitectureReportGenerator generator =
+                new ArchitectureReportGenerator();
+
+
+
+        String report =
+                generator.generateMarkdown(
+                        results
+                );
+
+
+
+        ReportWriter writer =
+                new ReportWriter();
+
+
+
+        writer.write(
+                "architectos-report.md",
+                report
         );
 
 
 
-        for (RuleResult result :
-                engine.analyze(graph)) {
+        System.out.println(
+                "Architecture report generated:"
+        );
 
 
-            System.out.println(
-                    "Rule: "
-                            + result.getRuleName()
-            );
-
-
-            System.out.println(
-                    "Severity: "
-                            + result.getSeverity()
-            );
-
-
-            System.out.println(
-                    "Status: "
-                            + (result.isViolated()
-                            ? "FAILED"
-                            : "PASSED")
-            );
-
-
-            System.out.println(
-                    "Message: "
-                            + result.getMessage()
-            );
-
-        }
+        System.out.println(
+                "architectos-report.md"
+        );
 
     }
 
