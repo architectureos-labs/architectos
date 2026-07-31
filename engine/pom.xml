@@ -4,19 +4,26 @@
          http://maven.apache.org/POM/4.0.0
          https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+
     <modelVersion>4.0.0</modelVersion>
+
 
     <groupId>com.architectureoslabs</groupId>
 
+
     <artifactId>architectos-engine</artifactId>
+
 
     <version>0.1.0-SNAPSHOT</version>
 
+
     <name>ArchitectOS Analysis Engine</name>
+
 
     <description>
         Core static architecture analysis engine for ArchitectOS.
     </description>
+
 
 
     <properties>
@@ -25,23 +32,65 @@
 
         <maven.compiler.target>17</maven.compiler.target>
 
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
     </properties>
 
-<dependencies>
 
-    <dependency>
 
-        <groupId>org.junit.jupiter</groupId>
+    <dependencies>
 
-        <artifactId>junit-jupiter</artifactId>
 
-        <version>5.10.2</version>
+        <dependency>
 
-        <scope>test</scope>
+            <groupId>org.junit.jupiter</groupId>
 
-    </dependency>
+            <artifactId>junit-jupiter</artifactId>
 
-</dependencies>
+            <version>5.10.2</version>
+
+            <scope>test</scope>
+
+        </dependency>
+
+
+    </dependencies>
+
+
+
+    <build>
+
+
+        <plugins>
+
+
+            <plugin>
+
+                <groupId>org.codehaus.mojo</groupId>
+
+                <artifactId>exec-maven-plugin</artifactId>
+
+                <version>3.5.0</version>
+
+
+                <configuration>
+
+                    <mainClass>
+                        com.architectureoslabs.engine.ArchitectOSApplication
+                    </mainClass>
+
+
+                </configuration>
+
+
+            </plugin>
+
+
+        </plugins>
+
+
+    </build>
+
 
 
 </project>

@@ -1,0 +1,21 @@
+# Maven build output
+target/
+
+# Generated ArchitectOS reports
+architectos-report.md
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# VS Code
+.vscode/
+
+# Operating system files
+.DS_Store
+Thumbs.db
