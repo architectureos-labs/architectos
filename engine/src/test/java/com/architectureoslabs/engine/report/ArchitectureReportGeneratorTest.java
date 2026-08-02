@@ -2,6 +2,7 @@ package com.architectureoslabs.engine.report;
 
 
 import com.architectureoslabs.engine.model.ArchitectureGraph;
+import com.architectureoslabs.engine.report.model.ArchitectureMetrics;
 import com.architectureoslabs.engine.report.model.ArchitectureReport;
 import com.architectureoslabs.engine.rules.RuleResult;
 
@@ -32,12 +33,21 @@ public class ArchitectureReportGeneratorTest {
                 );
 
 
+        ArchitectureMetrics metrics =
+                new ArchitectureMetrics(
+                        5,
+                        4,
+                        3
+                );
+
+
         ArchitectureReport architectureReport =
                 new ArchitectureReport(
                         "test-repository",
                         LocalDateTime.now(),
                         new ArchitectureGraph(),
-                        List.of(result)
+                        List.of(result),
+                        metrics
                 );
 
 
@@ -45,12 +55,10 @@ public class ArchitectureReportGeneratorTest {
                 new ArchitectureReportGenerator();
 
 
-
         String report =
                 generator.generateMarkdown(
                         architectureReport
                 );
-
 
 
         assertTrue(
