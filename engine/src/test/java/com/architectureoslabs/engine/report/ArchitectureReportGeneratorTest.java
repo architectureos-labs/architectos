@@ -1,10 +1,13 @@
 package com.architectureoslabs.engine.report;
 
 
+import com.architectureoslabs.engine.model.ArchitectureGraph;
+import com.architectureoslabs.engine.report.model.ArchitectureReport;
 import com.architectureoslabs.engine.rules.RuleResult;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,6 +32,15 @@ public class ArchitectureReportGeneratorTest {
                 );
 
 
+        ArchitectureReport architectureReport =
+                new ArchitectureReport(
+                        "test-repository",
+                        LocalDateTime.now(),
+                        new ArchitectureGraph(),
+                        List.of(result)
+                );
+
+
         ArchitectureReportGenerator generator =
                 new ArchitectureReportGenerator();
 
@@ -36,7 +48,7 @@ public class ArchitectureReportGeneratorTest {
 
         String report =
                 generator.generateMarkdown(
-                        List.of(result)
+                        architectureReport
                 );
 
 

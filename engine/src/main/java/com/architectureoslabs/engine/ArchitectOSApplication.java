@@ -5,15 +5,16 @@ import com.architectureoslabs.engine.analyzer.RepositoryAnalyzer;
 import com.architectureoslabs.engine.model.ArchitectureGraph;
 import com.architectureoslabs.engine.report.ArchitectureReportGenerator;
 import com.architectureoslabs.engine.report.ReportWriter;
+import com.architectureoslabs.engine.report.model.ArchitectureReport;
 import com.architectureoslabs.engine.scanner.RepositoryScanner;
 import com.architectureoslabs.engine.rules.ArchitectureRuleEngine;
 import com.architectureoslabs.engine.rules.CircularDependencyRule;
 import com.architectureoslabs.engine.rules.RuleResult;
 
 
-import java.util.List;
 import java.nio.file.Path;
-
+import java.time.LocalDateTime;
+import java.util.List;
 
 
 /**
@@ -26,9 +27,10 @@ public class ArchitectOSApplication {
             throws Exception {
 
 
-
         String repository =
-                ".";
+                args.length > 0
+                        ? args[0]
+                        : ".";
 
 
 
@@ -74,6 +76,16 @@ public class ArchitectOSApplication {
 
 
 
+        ArchitectureReport architectureReport =
+                new ArchitectureReport(
+                        repository,
+                        LocalDateTime.now(),
+                        graph,
+                        results
+                );
+
+
+
         ArchitectureReportGenerator generator =
                 new ArchitectureReportGenerator();
 
@@ -81,7 +93,7 @@ public class ArchitectOSApplication {
 
         String report =
                 generator.generateMarkdown(
-                        results
+                        architectureReport
                 );
 
 

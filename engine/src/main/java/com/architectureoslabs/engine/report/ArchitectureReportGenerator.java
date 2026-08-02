@@ -1,159 +1,43 @@
 package com.architectureoslabs.engine.report;
 
 
-import com.architectureoslabs.engine.rules.RuleResult;
-
-import java.util.List;
+import com.architectureoslabs.engine.report.model.ArchitectureReport;
+import com.architectureoslabs.engine.report.renderer.MarkdownReportRenderer;
 
 
 /**
- * Generates human-readable architecture reports.
+ * Generates architecture reports.
+ *
+ * Coordinates report creation and rendering.
  */
 public class ArchitectureReportGenerator {
+
+
+    private final MarkdownReportRenderer renderer;
+
+
+    public ArchitectureReportGenerator() {
+
+        this.renderer =
+                new MarkdownReportRenderer();
+
+    }
+
 
 
     /**
      * Generate Markdown report.
      *
-     * @param results architecture rule results
+     * @param report architecture report model
      * @return markdown content
      */
     public String generateMarkdown(
-            List<RuleResult> results
+            ArchitectureReport report
     ) {
 
-
-        StringBuilder report =
-                new StringBuilder();
-
-
-
-        report.append(
-                "# ArchitectOS Architecture Report\n\n"
+        return renderer.render(
+                report
         );
-
-
-
-        report.append(
-                "## Summary\n\n"
-        );
-
-
-        report.append(
-                "Rules Executed: "
-        );
-
-
-        report.append(
-                results.size()
-        );
-
-
-        report.append(
-                "\n\n"
-        );
-
-
-
-        long violations =
-                results.stream()
-                        .filter(
-                                RuleResult::isViolated
-                        )
-                        .count();
-
-
-
-        report.append(
-                "Violations Found: "
-        );
-
-
-        report.append(
-                violations
-        );
-
-
-        report.append(
-                "\n\n"
-        );
-
-
-
-        report.append(
-                "## Findings\n\n"
-        );
-
-
-
-        for (RuleResult result : results) {
-
-
-            report.append(
-                    "### "
-            );
-
-
-            report.append(
-                    result.getRuleName()
-            );
-
-
-            report.append(
-                    "\n\n"
-            );
-
-
-            report.append(
-                    "Severity: "
-            );
-
-
-            report.append(
-                    result.getSeverity()
-            );
-
-
-            report.append(
-                    "\n\n"
-            );
-
-
-            report.append(
-                    "Status: "
-            );
-
-
-            report.append(
-                    result.isViolated()
-                    ? "FAILED"
-                    : "PASSED"
-            );
-
-
-            report.append(
-                    "\n\n"
-            );
-
-
-            report.append(
-                    "Message: "
-            );
-
-
-            report.append(
-                    result.getMessage()
-            );
-
-
-            report.append(
-                    "\n\n"
-            );
-
-        }
-
-
-        return report.toString();
 
     }
 
