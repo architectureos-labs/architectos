@@ -1,11 +1,10 @@
-package com.architectureoslabs.engine.report.model;
+package com.architectureoslabs.engine.model;
 
-
-import com.architectureoslabs.engine.model.ArchitectureGraph;
-import com.architectureoslabs.engine.rules.RuleResult;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.architectureoslabs.engine.rules.RuleResult;
 
 
 /**
@@ -29,13 +28,17 @@ public class ArchitectureReport {
     private final ArchitectureMetrics metrics;
 
 
+    private final ArchitectureHealth health;
+
+
 
     public ArchitectureReport(
             String repositoryName,
             LocalDateTime generatedAt,
             ArchitectureGraph graph,
             List<RuleResult> ruleResults,
-            ArchitectureMetrics metrics
+            ArchitectureMetrics metrics,
+            ArchitectureHealth health
     ) {
 
         this.repositoryName = repositoryName;
@@ -43,6 +46,7 @@ public class ArchitectureReport {
         this.graph = graph;
         this.ruleResults = ruleResults;
         this.metrics = metrics;
+        this.health = health;
 
     }
 
@@ -83,6 +87,14 @@ public class ArchitectureReport {
     public ArchitectureMetrics getMetrics() {
 
         return metrics;
+
+    }
+
+
+
+    public ArchitectureHealth getHealth() {
+
+        return health;
 
     }
 

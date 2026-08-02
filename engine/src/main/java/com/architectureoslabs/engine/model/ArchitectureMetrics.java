@@ -1,4 +1,4 @@
-package com.architectureoslabs.engine.report.model;
+package com.architectureoslabs.engine.model;
 
 
 /**

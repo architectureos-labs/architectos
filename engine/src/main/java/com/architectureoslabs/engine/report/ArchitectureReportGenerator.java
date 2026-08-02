@@ -1,7 +1,7 @@
 package com.architectureoslabs.engine.report;
 
 
-import com.architectureoslabs.engine.report.model.ArchitectureReport;
+import com.architectureoslabs.engine.model.ArchitectureReport;
 import com.architectureoslabs.engine.report.renderer.MarkdownReportRenderer;
 
 

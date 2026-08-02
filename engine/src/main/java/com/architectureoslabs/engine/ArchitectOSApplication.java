@@ -1,19 +1,21 @@
 package com.architectureoslabs.engine;
 
-import com.architectureoslabs.engine.analyzer.RepositoryAnalyzer;
-import com.architectureoslabs.engine.model.ArchitectureGraph;
-import com.architectureoslabs.engine.report.ArchitectureReportGenerator;
-import com.architectureoslabs.engine.report.ReportWriter;
-import com.architectureoslabs.engine.report.model.ArchitectureMetrics;
-import com.architectureoslabs.engine.report.model.ArchitectureReport;
-import com.architectureoslabs.engine.scanner.RepositoryScanner;
-import com.architectureoslabs.engine.rules.ArchitectureRuleEngine;
-import com.architectureoslabs.engine.rules.CircularDependencyRule;
-import com.architectureoslabs.engine.rules.RuleResult;
-
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.architectureoslabs.engine.analyzer.RepositoryAnalyzer;
+import com.architectureoslabs.engine.model.ArchitectureGraph;
+import com.architectureoslabs.engine.model.ArchitectureHealth;
+import com.architectureoslabs.engine.model.ArchitectureMetrics;
+import com.architectureoslabs.engine.model.ArchitectureReport;
+import com.architectureoslabs.engine.report.ArchitectureReportGenerator;
+import com.architectureoslabs.engine.report.ReportWriter;
+import com.architectureoslabs.engine.report.health.ArchitectureHealthCalculator;
+import com.architectureoslabs.engine.rules.ArchitectureRuleEngine;
+import com.architectureoslabs.engine.rules.CircularDependencyRule;
+import com.architectureoslabs.engine.rules.RuleResult;
+import com.architectureoslabs.engine.scanner.RepositoryScanner;
 
 /**
  * Main entry point for ArchitectOS.
@@ -68,13 +70,22 @@ public class ArchitectOSApplication {
                         .getFileName()
                         .toString();
 
+        ArchitectureHealthCalculator healthCalculator
+                = new ArchitectureHealthCalculator();
+
+        ArchitectureHealth health
+                = healthCalculator.calculate(
+                        results
+                );
+
         ArchitectureReport architectureReport
                 = new ArchitectureReport(
                         repositoryName,
                         LocalDateTime.now(),
                         graph,
                         results,
-                        metrics
+                        metrics,
+                        health
                 );
 
         ArchitectureReportGenerator generator
