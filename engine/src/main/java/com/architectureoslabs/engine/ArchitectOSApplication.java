@@ -11,6 +11,7 @@ import com.architectureoslabs.engine.model.ArchitectureMetrics;
 import com.architectureoslabs.engine.model.ArchitectureReport;
 import com.architectureoslabs.engine.report.ArchitectureReportGenerator;
 import com.architectureoslabs.engine.report.ReportWriter;
+import com.architectureoslabs.engine.report.diagram.MermaidDiagramRenderer;
 import com.architectureoslabs.engine.report.health.ArchitectureHealthCalculator;
 import com.architectureoslabs.engine.rules.ArchitectureRuleEngine;
 import com.architectureoslabs.engine.rules.CircularDependencyRule;
@@ -78,6 +79,14 @@ public class ArchitectOSApplication {
                         results
                 );
 
+        MermaidDiagramRenderer diagramRenderer
+                = new MermaidDiagramRenderer();
+
+        String architectureDiagram
+                = diagramRenderer.render(
+                        graph
+                );
+
         ArchitectureReport architectureReport
                 = new ArchitectureReport(
                         repositoryName,
@@ -85,7 +94,8 @@ public class ArchitectOSApplication {
                         graph,
                         results,
                         metrics,
-                        health
+                        health,
+                        architectureDiagram
                 );
 
         ArchitectureReportGenerator generator

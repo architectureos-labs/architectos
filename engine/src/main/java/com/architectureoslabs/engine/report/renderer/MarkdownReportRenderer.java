@@ -92,6 +92,18 @@ public class MarkdownReportRenderer {
                 );
 
         markdown.append(
+                "## Component Dependency Diagram\n\n"
+        );
+
+        markdown.append(
+                report.getArchitectureDiagram()
+        );
+
+        markdown.append(
+                "\n\n"
+        );
+
+        markdown.append(
                 "## Rule Summary\n\n"
         );
 

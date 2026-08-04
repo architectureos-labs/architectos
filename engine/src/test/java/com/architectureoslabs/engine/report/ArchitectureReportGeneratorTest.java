@@ -48,7 +48,8 @@ public class ArchitectureReportGeneratorTest {
                         new ArchitectureGraph(),
                         List.of(result),
                         metrics,
-                        health
+                        health,
+                        "```mermaid\ngraph TD\n```"
                 );
 
         ArchitectureReportGenerator generator

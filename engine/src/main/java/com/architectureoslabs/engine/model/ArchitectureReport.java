@@ -31,6 +31,9 @@ public class ArchitectureReport {
     private final ArchitectureHealth health;
 
 
+    private final String architectureDiagram;
+
+
 
     public ArchitectureReport(
             String repositoryName,
@@ -38,7 +41,8 @@ public class ArchitectureReport {
             ArchitectureGraph graph,
             List<RuleResult> ruleResults,
             ArchitectureMetrics metrics,
-            ArchitectureHealth health
+            ArchitectureHealth health,
+            String architectureDiagram
     ) {
 
         this.repositoryName = repositoryName;
@@ -47,6 +51,7 @@ public class ArchitectureReport {
         this.ruleResults = ruleResults;
         this.metrics = metrics;
         this.health = health;
+        this.architectureDiagram = architectureDiagram;
 
     }
 
@@ -95,6 +100,14 @@ public class ArchitectureReport {
     public ArchitectureHealth getHealth() {
 
         return health;
+
+    }
+
+
+
+    public String getArchitectureDiagram() {
+
+        return architectureDiagram;
 
     }
 
