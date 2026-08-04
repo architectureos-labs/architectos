@@ -49,7 +49,8 @@ public class ArchitectureReportGeneratorTest {
                         List.of(result),
                         metrics,
                         health,
-                        "```mermaid\ngraph TD\n```"
+                        "```mermaid\ngraph TD\n```",
+                        List.of()
                 );
 
         ArchitectureReportGenerator generator

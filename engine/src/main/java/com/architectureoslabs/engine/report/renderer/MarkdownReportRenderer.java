@@ -1,5 +1,6 @@
 package com.architectureoslabs.engine.report.renderer;
 
+import com.architectureoslabs.engine.analysis.hotspot.DependencyHotspot;
 import com.architectureoslabs.engine.model.ArchitectureMetrics;
 import com.architectureoslabs.engine.model.ArchitectureReport;
 import com.architectureoslabs.engine.rules.RuleResult;
@@ -134,6 +135,69 @@ public class MarkdownReportRenderer {
                 .append(
                         "\n\n"
                 );
+
+        markdown.append(
+                "## Dependency Hotspots\n\n"
+        );
+
+        for (DependencyHotspot hotspot
+                : report.getHotspots()) {
+
+            markdown.append(
+                    "### "
+            )
+                    .append(
+                            hotspot.getMetrics()
+                                    .getComponentName()
+                    )
+                    .append(
+                            "\n\n"
+                    );
+
+            markdown.append(
+                    "Incoming Dependencies: "
+            )
+                    .append(
+                            hotspot.getMetrics()
+                                    .getIncomingDependencies()
+                    )
+                    .append(
+                            "\n\n"
+                    );
+
+            markdown.append(
+                    "Outgoing Dependencies: "
+            )
+                    .append(
+                            hotspot.getMetrics()
+                                    .getOutgoingDependencies()
+                    )
+                    .append(
+                            "\n\n"
+                    );
+
+            markdown.append(
+                    "Coupling Score: "
+            )
+                    .append(
+                            hotspot.getMetrics()
+                                    .getCouplingScore()
+                    )
+                    .append(
+                            "\n\n"
+                    );
+
+            markdown.append(
+                    "Risk: "
+            )
+                    .append(
+                            hotspot.getRiskLevel()
+                    )
+                    .append(
+                            "\n\n"
+                    );
+
+        }
 
         markdown.append(
                 "## Findings\n\n"

@@ -1,39 +1,31 @@
 package com.architectureoslabs.engine.model;
 
-
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.architectureoslabs.engine.analysis.hotspot.DependencyHotspot;
 import com.architectureoslabs.engine.rules.RuleResult;
-
 
 /**
  * Represents a complete architecture analysis report.
  */
 public class ArchitectureReport {
 
-
     private final String repositoryName;
-
 
     private final LocalDateTime generatedAt;
 
-
     private final ArchitectureGraph graph;
-
 
     private final List<RuleResult> ruleResults;
 
-
     private final ArchitectureMetrics metrics;
-
 
     private final ArchitectureHealth health;
 
-
     private final String architectureDiagram;
 
-
+    private final List<DependencyHotspot> hotspots;
 
     public ArchitectureReport(
             String repositoryName,
@@ -42,7 +34,8 @@ public class ArchitectureReport {
             List<RuleResult> ruleResults,
             ArchitectureMetrics metrics,
             ArchitectureHealth health,
-            String architectureDiagram
+            String architectureDiagram,
+            List<DependencyHotspot> hotspots
     ) {
 
         this.repositoryName = repositoryName;
@@ -52,10 +45,9 @@ public class ArchitectureReport {
         this.metrics = metrics;
         this.health = health;
         this.architectureDiagram = architectureDiagram;
+        this.hotspots = hotspots;
 
     }
-
-
 
     public String getRepositoryName() {
 
@@ -63,15 +55,11 @@ public class ArchitectureReport {
 
     }
 
-
-
     public LocalDateTime getGeneratedAt() {
 
         return generatedAt;
 
     }
-
-
 
     public ArchitectureGraph getGraph() {
 
@@ -79,15 +67,11 @@ public class ArchitectureReport {
 
     }
 
-
-
     public List<RuleResult> getRuleResults() {
 
         return ruleResults;
 
     }
-
-
 
     public ArchitectureMetrics getMetrics() {
 
@@ -95,19 +79,21 @@ public class ArchitectureReport {
 
     }
 
-
-
     public ArchitectureHealth getHealth() {
 
         return health;
 
     }
 
-
-
     public String getArchitectureDiagram() {
 
         return architectureDiagram;
+
+    }
+
+    public List<DependencyHotspot> getHotspots() {
+
+        return hotspots;
 
     }
 

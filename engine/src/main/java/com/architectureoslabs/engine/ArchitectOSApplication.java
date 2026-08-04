@@ -4,6 +4,8 @@ import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.architectureoslabs.engine.analysis.hotspot.DependencyHotspot;
+import com.architectureoslabs.engine.analysis.hotspot.DependencyHotspotAnalyzer;
 import com.architectureoslabs.engine.analyzer.RepositoryAnalyzer;
 import com.architectureoslabs.engine.model.ArchitectureGraph;
 import com.architectureoslabs.engine.model.ArchitectureHealth;
@@ -79,6 +81,14 @@ public class ArchitectOSApplication {
                         results
                 );
 
+        DependencyHotspotAnalyzer hotspotAnalyzer
+                = new DependencyHotspotAnalyzer();
+
+        List<DependencyHotspot> hotspots
+                = hotspotAnalyzer.analyze(
+                        graph
+                );
+
         MermaidDiagramRenderer diagramRenderer
                 = new MermaidDiagramRenderer();
 
@@ -95,7 +105,8 @@ public class ArchitectOSApplication {
                         results,
                         metrics,
                         health,
-                        architectureDiagram
+                        architectureDiagram,
+                        hotspots
                 );
 
         ArchitectureReportGenerator generator
