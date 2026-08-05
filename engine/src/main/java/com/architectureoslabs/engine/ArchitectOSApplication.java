@@ -7,8 +7,10 @@ import java.util.List;
 import com.architectureoslabs.engine.analysis.hotspot.DependencyHotspot;
 import com.architectureoslabs.engine.analysis.hotspot.DependencyHotspotAnalyzer;
 import com.architectureoslabs.engine.analyzer.RepositoryAnalyzer;
+import com.architectureoslabs.engine.architecture.layer.ComponentLayerClassifier;
 import com.architectureoslabs.engine.model.ArchitectureGraph;
 import com.architectureoslabs.engine.model.ArchitectureHealth;
+import com.architectureoslabs.engine.model.ArchitectureLayerSummary;
 import com.architectureoslabs.engine.model.ArchitectureMetrics;
 import com.architectureoslabs.engine.model.ArchitectureReport;
 import com.architectureoslabs.engine.report.ArchitectureReportGenerator;
@@ -17,6 +19,7 @@ import com.architectureoslabs.engine.report.diagram.MermaidDiagramRenderer;
 import com.architectureoslabs.engine.report.health.ArchitectureHealthCalculator;
 import com.architectureoslabs.engine.rules.ArchitectureRuleEngine;
 import com.architectureoslabs.engine.rules.CircularDependencyRule;
+import com.architectureoslabs.engine.rules.LayerDependencyArchitectureRule;
 import com.architectureoslabs.engine.rules.RuleResult;
 import com.architectureoslabs.engine.scanner.RepositoryScanner;
 
@@ -54,6 +57,10 @@ public class ArchitectOSApplication {
 
         engine.registerRule(
                 new CircularDependencyRule()
+        );
+
+        engine.registerRule(
+                new LayerDependencyArchitectureRule()
         );
 
         List<RuleResult> results
@@ -97,6 +104,39 @@ public class ArchitectOSApplication {
                         graph
                 );
 
+        ComponentLayerClassifier classifier
+                = new ComponentLayerClassifier();
+
+        List<ArchitectureLayerSummary> layerSummaries
+                = graph.getComponents()
+                        .stream()
+                        .map(
+                                component
+                                -> {
+
+                            var layer
+                                    = classifier.classify(
+                                            component.getName(),
+                                            component.getPackageName()
+                                    );
+
+                            System.out.println(
+                                    component.getName()
+                                    + " -> "
+                                    + component.getPackageName()
+                                    + " -> "
+                                    + layer
+                            );
+
+                            return new ArchitectureLayerSummary(
+                                    component.getName(),
+                                    layer
+                            );
+
+                        }
+                        )
+                        .toList();
+
         ArchitectureReport architectureReport
                 = new ArchitectureReport(
                         repositoryName,
@@ -106,7 +146,8 @@ public class ArchitectOSApplication {
                         metrics,
                         health,
                         architectureDiagram,
-                        hotspots
+                        hotspots,
+                        layerSummaries
                 );
 
         ArchitectureReportGenerator generator

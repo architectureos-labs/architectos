@@ -27,6 +27,8 @@ public class ArchitectureReport {
 
     private final List<DependencyHotspot> hotspots;
 
+    private final List<ArchitectureLayerSummary> layerSummaries;
+
     public ArchitectureReport(
             String repositoryName,
             LocalDateTime generatedAt,
@@ -35,7 +37,8 @@ public class ArchitectureReport {
             ArchitectureMetrics metrics,
             ArchitectureHealth health,
             String architectureDiagram,
-            List<DependencyHotspot> hotspots
+            List<DependencyHotspot> hotspots,
+            List<ArchitectureLayerSummary> layerSummaries
     ) {
 
         this.repositoryName = repositoryName;
@@ -46,6 +49,7 @@ public class ArchitectureReport {
         this.health = health;
         this.architectureDiagram = architectureDiagram;
         this.hotspots = hotspots;
+        this.layerSummaries = layerSummaries;
 
     }
 
@@ -94,6 +98,12 @@ public class ArchitectureReport {
     public List<DependencyHotspot> getHotspots() {
 
         return hotspots;
+
+    }
+
+    public List<ArchitectureLayerSummary> getLayerSummaries() {
+
+        return layerSummaries;
 
     }
 

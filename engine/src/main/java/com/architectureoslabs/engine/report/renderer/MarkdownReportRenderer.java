@@ -1,6 +1,7 @@
 package com.architectureoslabs.engine.report.renderer;
 
 import com.architectureoslabs.engine.analysis.hotspot.DependencyHotspot;
+import com.architectureoslabs.engine.model.ArchitectureLayerSummary;
 import com.architectureoslabs.engine.model.ArchitectureMetrics;
 import com.architectureoslabs.engine.model.ArchitectureReport;
 import com.architectureoslabs.engine.rules.RuleResult;
@@ -135,6 +136,35 @@ public class MarkdownReportRenderer {
                 .append(
                         "\n\n"
                 );
+
+        markdown.append(
+                "## Architecture Layers\n\n"
+        );
+
+        for (ArchitectureLayerSummary summary
+                : report.getLayerSummaries()) {
+
+            markdown.append(
+                    "### "
+            )
+                    .append(
+                            summary.getComponentName()
+                    )
+                    .append(
+                            "\n\n"
+                    );
+
+            markdown.append(
+                    "Layer: "
+            )
+                    .append(
+                            summary.getLayer()
+                    )
+                    .append(
+                            "\n\n"
+                    );
+
+        }
 
         markdown.append(
                 "## Dependency Hotspots\n\n"

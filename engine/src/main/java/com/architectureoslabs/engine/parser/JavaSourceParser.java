@@ -1,22 +1,16 @@
 package com.architectureoslabs.engine.parser;
 
+import java.util.ArrayList;
+import java.util.List;
 
 import com.architectureoslabs.engine.model.Dependency;
 import com.architectureoslabs.engine.model.ParsedJavaFile;
 import com.architectureoslabs.engine.model.SoftwareComponent;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
-
-
 /**
  * Parses Java source files and extracts architecture information.
  */
 public class JavaSourceParser {
-
-
 
     /**
      * Parse Java source code.
@@ -26,27 +20,24 @@ public class JavaSourceParser {
      */
     public ParsedJavaFile parse(String sourceCode) {
 
+        String className
+                = extractClassName(sourceCode);
 
-        String className =
-                extractClassName(sourceCode);
+        String packageName
+                = extractPackageName(sourceCode);
 
-
-
-        SoftwareComponent component =
-                new SoftwareComponent(
+        SoftwareComponent component
+                = new SoftwareComponent(
                         className,
+                        packageName,
                         "class"
                 );
 
-
-
-        List<Dependency> dependencies =
-                extractDependencies(
+        List<Dependency> dependencies
+                = extractDependencies(
                         className,
                         sourceCode
                 );
-
-
 
         return new ParsedJavaFile(
                 component,
@@ -55,19 +46,12 @@ public class JavaSourceParser {
 
     }
 
-
-
-
     private String extractClassName(String sourceCode) {
-
 
         String keyword = "class ";
 
-
-        int index =
-                sourceCode.indexOf(keyword);
-
-
+        int index
+                = sourceCode.indexOf(keyword);
 
         if (index == -1) {
 
@@ -75,64 +59,44 @@ public class JavaSourceParser {
 
         }
 
-
-
-        String remaining =
-                sourceCode.substring(
+        String remaining
+                = sourceCode.substring(
                         index + keyword.length()
                 );
-
-
 
         return remaining
                 .split("\\s+")[0];
 
     }
 
-
-
-
     private List<Dependency> extractDependencies(
             String className,
             String sourceCode
     ) {
 
+        List<Dependency> dependencies
+                = new ArrayList<>();
 
-        List<Dependency> dependencies =
-                new ArrayList<>();
-
-
-
-        String[] lines =
-                sourceCode.split("\\n");
-
-
+        String[] lines
+                = sourceCode.split("\\n");
 
         for (String line : lines) {
 
-
             line = line.trim();
-
-
 
             if (line.startsWith("import ")) {
 
-
-                String importedClass =
-                        line.substring(7)
+                String importedClass
+                        = line.substring(7)
                                 .replace(
                                         ";",
                                         ""
                                 );
 
-
-
-                String simpleName =
-                        importedClass.substring(
+                String simpleName
+                        = importedClass.substring(
                                 importedClass.lastIndexOf(".") + 1
                         );
-
-
 
                 dependencies.add(
                         new Dependency(
@@ -145,8 +109,30 @@ public class JavaSourceParser {
 
         }
 
-
         return dependencies;
+
+    }
+
+    private String extractPackageName(String sourceCode) {
+
+        String keyword = "package ";
+
+        int index = sourceCode.indexOf(keyword);
+
+        if (index == -1) {
+
+            return "";
+
+        }
+
+        String remaining
+                = sourceCode.substring(
+                        index + keyword.length()
+                );
+
+        return remaining
+                .split(";")[0]
+                .trim();
 
     }
 

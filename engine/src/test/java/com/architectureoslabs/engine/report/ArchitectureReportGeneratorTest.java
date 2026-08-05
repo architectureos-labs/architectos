@@ -50,6 +50,7 @@ public class ArchitectureReportGeneratorTest {
                         metrics,
                         health,
                         "```mermaid\ngraph TD\n```",
+                        List.of(),
                         List.of()
                 );
 

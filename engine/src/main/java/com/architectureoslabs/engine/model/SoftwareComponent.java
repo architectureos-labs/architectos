@@ -5,10 +5,7 @@ package com.architectureoslabs.engine.model;
  *
  * A component can represent:
  *
- * - Application module
- * - Package
- * - Service
- * - Logical architecture unit
+ * - Application module - Package - Service - Logical architecture unit
  */
 public class SoftwareComponent {
 
@@ -16,29 +13,53 @@ public class SoftwareComponent {
 
     private final String type;
 
+    private final String packageName;
 
-    public SoftwareComponent(String name, String type) {
-        this.name = name;
-        this.type = type;
+    public SoftwareComponent(
+            String name,
+            String type
+    ) {
+
+        this(
+                name,
+                "",
+                type
+        );
+
     }
 
+    public SoftwareComponent(
+            String name,
+            String packageName,
+            String type
+    ) {
+
+        this.name = name;
+        this.type = type;
+        this.packageName = packageName;
+
+    }
 
     public String getName() {
         return name;
     }
 
-
     public String getType() {
         return type;
     }
 
+    public String getPackageName() {
+
+        return packageName;
+
+    }
 
     @Override
     public String toString() {
 
-        return "SoftwareComponent{" +
-                "name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                '}';
+        return "SoftwareComponent{"
+                + "name='" + name + '\''
+                + ", type='" + type + '\''
+                + '}';
     }
 }
