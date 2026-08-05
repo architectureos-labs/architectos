@@ -22,6 +22,8 @@ import com.architectureoslabs.engine.rules.CircularDependencyRule;
 import com.architectureoslabs.engine.rules.LayerDependencyArchitectureRule;
 import com.architectureoslabs.engine.rules.RuleResult;
 import com.architectureoslabs.engine.scanner.RepositoryScanner;
+import com.architectureoslabs.engine.config.ArchitectureRuleConfigLoader;
+import com.architectureoslabs.engine.rules.ConfigurableLayerDependencyRule;
 
 /**
  * Main entry point for ArchitectOS.
@@ -59,8 +61,13 @@ public class ArchitectOSApplication {
                 new CircularDependencyRule()
         );
 
+        ArchitectureRuleConfigLoader configLoader
+                = new ArchitectureRuleConfigLoader();
+
         engine.registerRule(
-                new LayerDependencyArchitectureRule()
+                new ConfigurableLayerDependencyRule(
+                        configLoader.load()
+                )
         );
 
         List<RuleResult> results

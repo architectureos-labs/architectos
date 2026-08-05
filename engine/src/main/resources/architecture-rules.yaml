@@ -1,0 +1,17 @@
+layers:
+
+  CONTROLLER:
+    allowed:
+      - SERVICE
+
+  SERVICE:
+    allowed:
+      - REPOSITORY
+      - DOMAIN
+
+  REPOSITORY:
+    allowed:
+      - DOMAIN
+
+  DOMAIN:
+    allowed: []
